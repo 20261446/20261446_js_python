@@ -1,0 +1,16 @@
+body {
+    padding-top: 200px;
+    text-align: center;
+}
+#heading {
+    color:#344390;
+    /*color:#344390;
+    color:darkred;
+    color:#61CB85;
+    color:#6F5A31; */
+    font-size: 60px;
+}
+#text {
+    color:gray;
+    font-size: 15px;
+}

@@ -1,0 +1,83 @@
+<!--<!DOCTYPE html>
+<html lang="ko">
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>글자색 바꾸기</title>
+        <link rel="stylesheet" href="3rd_test.css">
+
+    </head>
+  <body>
+
+        <h1 id = "heading">자바 스크립트</h1>
+        <p id = "text">위 텍스트를 클릭해 보세요</p>
+
+        <script>
+            var heading = document.querySelector("#heading");
+            heading.onclick = function() {
+                heading.style.color = "deepskyblue";
+            }
+        </script>
+    </body>
+</html>
+
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+
+        <meta charset="UTF-8">
+         문서의 문자 인코딩 방식을 지정합니다. 다국어가 깨지지 않고 올바르게 표시되도록 UTF-8을 사용합니다. 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+         모바일 기기의 화면 너비에 맞추어 웹페이지가 반응형으로 표시되도록 설정합니다. 초기 확대 비율을 1로 설정합니다. 
+        <title>welcome</title>
+        <style>
+            body {
+                font-size: 1.9em;
+                /* 기본 글자 크기를 부모요소 대비 1.9배 크게 확대하여 가독성을 높입니다. */
+                text-align: center;
+            }
+        </style>
+    </head>
+  <body>
+
+        <h1>자바 스크립트 3주차 수업입니다.</h1>
+        <script>
+        // HTML문서 안에서 자바 스크립트 코드를 작성하고 실행할 수 있도록 선언하는 태그의 시작입니다.
+            var name = prompt("이름을 입력하세요");
+            // 브라우저 기본 입력 창을 띄워 사용자에게 이름을 입력받고, 그 값을 name이라는 변수에 저장합니다.
+            document.write("<b><big>" + name + "</big></b>님 환영합니다.");
+            // 웹 페이지 본문에 직접 HTML문자열을 출력합니다. 입력받은 name변수 양쪽에 굵게 (<b>)와 크게(<big>) 태그를 적용하여 환영 메시지를 표시합니다.
+        </script>
+    </body>
+</html>-->
+
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>welcome</title>
+        <style>
+            body {
+                font-size: 1.9em;
+                
+                text-align: center;
+            }
+        </style>
+    </head>
+  <body>
+
+        <!-- <h1>자바 스크립트 3주차 수업입니다.</h1> -->
+        <script>
+        
+            var age = prompt("출생년도를 입력하세요");
+            document.write("<b><big>" + (2026 - age) + "</big></b>살 입니다.");
+        </script>
+    </body>
+</html>
