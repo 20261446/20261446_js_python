@@ -1,13 +1,13 @@
 
-    
-        /* 기본 화면 */
+    <style>
+        /* 기본 스타일 정의 */
         * {
             box-sizing: border-box;
         }
 
         body {
-            font-family: 'Pretendard', sans-serif;
-            background-color: #F7F7F4; 
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F8FAF9;
             color: #1E293B;
             font-size: 16px;
             line-height: 1.6;
@@ -15,7 +15,11 @@
             word-break: keep-all;
         }
 
-        /* 콘텐츠 화면 전환 애니메이션 */
+        .font-title {
+            font-family: 'Gowun Dodum', sans-serif;
+        }
+
+        /* 애니메이션 효과 정의 */
         .fade-in {
             animation: fadeIn 0.4s ease-in-out forwards;
         }
@@ -23,7 +27,7 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(12px);
             }
             to {
                 opacity: 1;
@@ -32,7 +36,7 @@
         }
 
         .scale-up {
-            animation: scaleUp 0.3s ease-in-out forwards;
+            animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         @keyframes scaleUp {
@@ -46,161 +50,98 @@
             }
         }
 
-        /* 주요 테스트 카드 */
-        #screen-intro,
-        #screen-question,
-        #screen-result {
-            border-radius: 24px;
-            box-shadow: 0 12px 36px rgba(30, 41, 59, 0.07);
+        /* 카드 및 영역 디자인 스타일 */
+        .glass-card {
+            background: #FFFFFF;
+            border-radius: 28px;
+            box-shadow: 0 16px 40px -10px rgba(245, 158, 11, 0.12), 0 8px 20px -6px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(254, 243, 199, 0.8);
         }
 
-                /* 메인 제목 */
+        /* 메인 타이틀 */
         #screen-intro h1 {
             font-family: 'Gowun Dodum', sans-serif;
-            font-size: clamp(27px, 5vw, 33px);
-            line-height: 1.5;
-            letter-spacing: -0.04em;
+            font-size: clamp(26px, 5vw, 34px);
+            line-height: 1.4;
+            letter-spacing: -0.03em;
             font-weight: 700;
             color: #45352D;
         }
 
         /* 질문 문구 */
         #question-text {
-            font-size: clamp(18px, 3.5vw, 21px);
-            line-height: 1.7;
+            font-size: clamp(17px, 3.8vw, 22px);
+            line-height: 1.65;
             letter-spacing: -0.025em;
             font-weight: 700;
             overflow-wrap: anywhere;
         }
 
-        
         /* 여행 유형 결과 제목 */
         #result-title {
-            font-size: clamp(26px, 5vw, 30px);
-            line-height: 1.45;
-            letter-spacing: -0.035em;
+            font-size: clamp(24px, 5vw, 32px);
+            line-height: 1.4;
+            letter-spacing: -0.03em;
             font-weight: 800;
-            color: #172033;
+            color: #1E293B;
             overflow-wrap: anywhere;
-            margin-bottom: 16px;
         }
 
         /* 여행 유형 설명 */
         #result-type-description {
-            font-size: 16px;
-            line-height: 1.85;
+            font-size: 15px;
+            line-height: 1.8;
             letter-spacing: -0.015em;
-            color: #7C3D20;
-            background-color: #FFF8EF;
-            border-color: #F5D9BD;
-            padding: 16px 18px;
+            color: #78350F;
+            background-color: #FEF3C7;
+            border: 1px solid #FDE68A;
+            padding: 18px 20px;
+            border-radius: 18px;
         }
 
         /* AI 팩폭 문구 */
         #result-ai-comment {
-            font-size: 16px;
-            line-height: 1.9;
-            font-weight: 500;
-            color: #78350F;
+            font-size: 15px;
+            line-height: 1.8;
+            font-weight: 600;
+            color: #92400E;
             letter-spacing: -0.01em;
             overflow-wrap: anywhere;
         }
 
         /* 추천 지역 */
         #result-region {
-            font-size: 18px;
-            line-height: 1.75;
-            font-weight: 700;
-            color: #1E293B;
+            font-size: 17px;
+            line-height: 1.6;
+            font-weight: 800;
+            color: #0F172A;
             overflow-wrap: anywhere;
         }
 
         /* 체크리스트 */
         #result-checklist {
-            font-size: 15px;
-            line-height: 1.9;
-            color: #475569;
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: #334155;
         }
 
         #result-checklist li {
+            display: flex;
             align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 5px;
+            gap: 10px;
         }
 
-
-        /* 버튼 공통 효과 */
+        /* 버튼 공통 디테일 설정 */
         button {
             -webkit-tap-highlight-color: transparent;
-            transition:
-                background-color 0.2s ease,
-                border-color 0.2s ease,
-                box-shadow 0.2s ease,
-                transform 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        
-       
-        
-        
-        #options-container button:focus:not(:focus-visible) {
-            outline: none;
-            box-shadow: none;
-        }
-
-        #options-container button {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-
-
-        
-        /* 화면이 좁은 모바일 */
         @media (max-width: 480px) {
-            body {
-                font-size: 15px;
-            }
-
-            #screen-intro,
-            #screen-question,
-            #screen-result {
-                border-radius: 20px;
-            }
-
-            #result-title {
-                font-size: 26px;
-            }
-
-            #result-type-description {
-                font-size: 15px;
-                padding: 14px;
-            }
-
-            #result-ai-comment {
-                font-size: 15px;
-            }
-
-            #result-region {
-                font-size: 16px;
-            }
-
-            #result-checklist {
-                font-size: 14px;
+            .glass-card {
+                border-radius: 22px;
             }
         }
-
-
-        /* 움직임 최소화 설정을 사용하는 경우 */
-        @media (prefers-reduced-motion: reduce) {
-            .fade-in,
-            .scale-up {
-                animation: none;
-            }
-
-            button {
-                transition: none;
-            }
-        }
-    
+    </style>
 
 
