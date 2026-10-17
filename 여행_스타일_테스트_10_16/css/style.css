@@ -1,0 +1,223 @@
+
+    /* 기본 화면 */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Pretendard', sans-serif;
+    background-color: #F7F7F4; 
+    color: #1E293B;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    word-break: keep-all;
+}
+
+/* 콘텐츠 화면 전환 애니메이션 */
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scale-up {
+    animation: scaleUp 0.3s ease-in-out forwards;
+}
+
+@keyframes scaleUp {
+    from {
+        transform: scale(0.97);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 주요 테스트 카드 */
+#screen-intro,
+#screen-question,
+#screen-result {
+    border-radius: 24px;
+    box-shadow: 0 12px 36px rgba(30, 41, 59, 0.07);
+}
+
+/* 메인 제목 */
+#screen-intro h1 {
+    font-family: 'Gowun Dodum', sans-serif;
+    font-size: clamp(27px, 5vw, 33px);
+    line-height: 1.5;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+    color: #45352D;
+}
+
+/* 질문 문구 */
+#question-text {
+    font-size: clamp(18px, 3.5vw, 21px);
+    line-height: 1.7;
+    letter-spacing: -0.025em;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+/* 여행 유형 결과 제목 */
+#result-title {
+    font-size: clamp(26px, 5vw, 30px);
+    line-height: 1.45;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: #172033;
+    overflow-wrap: anywhere;
+    margin-bottom: 16px;
+}
+
+/* 여행 유형 설명 */
+#result-type-description {
+    font-size: 16px;
+    line-height: 1.85;
+    letter-spacing: -0.015em;
+    color: #7C3D20;
+    background-color: #FFF8EF;
+    border-color: #F5D9BD;
+    padding: 16px 18px;
+}
+
+/* AI 팩폭 문구 */
+#result-ai-comment {
+    font-size: 16px;
+    line-height: 1.9;
+    font-weight: 500;
+    color: #78350F;
+    letter-spacing: -0.01em;
+    overflow-wrap: anywhere;
+}
+
+/* 추천 지역 */
+#result-region {
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 700;
+    color: #1E293B;
+    overflow-wrap: anywhere;
+}
+
+/* 카카오 지도 바로가기 버튼 스타일 */
+.kakao-map-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background-color: #FEE500;
+    color: #000000;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    border: none;
+    cursor: pointer;
+}
+
+.kakao-map-btn:hover {
+    background-color: #FADA0A;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 체크리스트 */
+#result-checklist {
+    font-size: 15px;
+    line-height: 1.9;
+    color: #475569;
+}
+
+#result-checklist li {
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 5px;
+}
+
+/* 버튼 공통 효과 */
+button {
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+#options-container button:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+}
+
+#options-container button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 화면이 좁은 모바일 */
+@media (max-width: 480px) {
+    body {
+        font-size: 15px;
+    }
+
+    #screen-intro,
+    #screen-question,
+    #screen-result {
+        border-radius: 20px;
+    }
+
+    #result-title {
+        font-size: 26px;
+    }
+
+    #result-type-description {
+        font-size: 15px;
+        padding: 14px;
+    }
+
+    #result-ai-comment {
+        font-size: 15px;
+    }
+
+    #result-region {
+        font-size: 14px;
+    }
+
+    .kakao-map-btn {
+        font-size: 12px;
+        padding: 7px 10px;
+    }
+
+    #result-checklist {
+        font-size: 14px;
+    }
+}
+
+/* 움직임 최소화 설정을 사용하는 경우 */
+@media (prefers-reduced-motion: reduce) {
+    .fade-in,
+    .scale-up {
+        animation: none;
+    }
+
+    button {
+        transition: none;
+    }
+}
