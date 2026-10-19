@@ -334,7 +334,7 @@ const travelTypeComments = {
     ],
     NQPFX: [
         "자연이 좋은 이유: 나무나 풀은 나한테 말을 걸거나 리액션을 요구하지 않아서.",
-        "쉬러 가서 진짜 숨만 쉬고 있음. 남들이 보면 어디 아픈 사람인 줄 앎.",
+        "쉬러 가서 진짜 숨만 쉬고 있음. 남들이 보면 어디 아픈 사람인 줄 쎔.",
         "'나 찾아가지 마' 감성으로 떠났는데 막상 아무한테도 연락 안 오면 은근 섭섭해함."
     ],
     NQPOL: [
@@ -472,80 +472,220 @@ function buildTravelComment(type) {
     return comments[randomIndex];
 }
 
-
     function buildTravelChecklist(type) {
         const items = [];
-        items.push(type.letters.nature === "N"
-            ? "자연 풍경을 즐길 수 있는 장소와 산책 코스 찾아보기"
-            : "대중교통, 쇼핑 구역, 실내 관광지 위치 확인하기");
-        items.push(type.letters.social === "E"
-            ? "함께 즐길 체험이나 활기찬 장소를 일정에 넣기"
-            : "혼자 쉬거나 조용히 머물 수 있는 시간을 확보하기");
-        items.push(type.letters.planning === "P"
-            ? "이동 시간과 예약 시간을 포함한 일정표 준비하기"
-            : "꼭 가고 싶은 곳만 정하고 나머지 일정은 여유롭게 비워두기");
-        items.push(type.letters.food === "F"
-            ? "가고 싶은 맛집의 영업시간과 웨이팅 여부 확인하기"
-            : "동선에 맞춰 간단히 식사할 수 있는 곳 찾아두기");
-        items.push(type.letters.sights === "L"
-            ? "대표 관광지의 입장료와 예약 여부 확인하기"
-            : "현지 시장이나 골목 등 숨은 장소 찾아보기");
+
+        // 1. 자연 / 인프라 성향
+        if (type.letters.nature === "N") {
+            items.push("자연 풍경을 즐길 수 있는 장소와 산책 코스 찾아보기");
+            items.push("여행지 날씨를 확인하고 야외 활동 준비하기");
+        } else {
+            items.push("대중교통, 쇼핑 구역, 실내 관광지 위치 확인하기");
+            items.push("비가 오거나 날씨가 나쁠 때 갈 실내 장소 찾아보기");
+        }
+
+        // 2. 외향 / 내향 성향
+        if (type.letters.social === "E") {
+            items.push("함께 즐길 체험이나 활기찬 장소 일정에 넣기");
+        } else {
+            items.push("혼자 쉬거나 조용히 머물 수 있는 시간 확보하기");
+        }
+
+        // 3. 계획 / 즉흥 성향
+        if (type.letters.planning === "P") {
+            items.push("이동 경로와 예약 시간을 포함한 일정표 준비하기");
+        } else {
+            items.push("꼭 가고 싶은 곳만 정하고 자유 시간 남겨두기");
+        }
+
+        // 4. 음식 선호 / 비선호 성향
+        if (type.letters.food === "F") {
+            items.push("가고 싶은 맛집의 영업시간과 웨이팅 여부 확인하기");
+        } else {
+            items.push("관광 동선에 맞춰 간단히 식사할 장소 찾아두기");
+        }
+
+        // 5. 명소 선호 / 비선호 성향
+        if (type.letters.sights === "L") {
+            items.push("대표 관광지의 입장료와 예약 여부 확인하기");
+        } else {
+            items.push("현지 시장이나 골목 등 숨은 장소 찾아보기");
+        }
+
+        // 6. 모든 유형 공통 준비
+        items.push("숙소 예약과 귀가 교통편 확인하기");
+
         return items;
     }
 
-    function buildRegionRecommendation(type) {
-        // 지역별/유형별 최종 추천은 팀에서 확정한 자료가 나오면 교체할 임시 예시입니다.
-        if (type.letters.nature === "N" && type.letters.planning === "P") return "강원도 — 자연 풍경과 산책 코스";
-        if (type.letters.nature === "N") return "제주도 — 바다와 자연 중심 여행";
-        if (type.letters.food === "F") return "전주 — 지역 음식과 먹거리 탐방";
-        if (type.letters.sights === "L") return "서울 — 대표 명소와 도심 관광";
-        return "부산 — 도심과 해변을 함께 즐기는 여행";
+
+function buildRegionRecommendation(type) {
+    // 32개 여행 유형별 추천 지역 및 대표 관광지
+    const recommendations = {
+        "자연·계획형 휴식가": {
+            region: "강원",
+            attraction: "인제 원대리 자작나무숲"
+        },
+        "자연·즉흥형 탐험가": {
+            region: "인천",
+            attraction: "무의도 하나개해수욕장"
+        },
+        "자연·미식형 식도락가": {
+            region: "경기",
+            attraction: "가평 아침고요수목원"
+        },
+        "자연·명소형 탐방가": {
+            region: "순천",
+            attraction: "순천만습지"
+        },
+        "자연·외향형 액티비티족": {
+            region: "경주",
+            attraction: "첨성대 & 대릉원"
+        },
+        "자연·내향형 힐링가": {
+            region: "제주",
+            attraction: "안돌오름 비밀의 숲"
+        },
+        "자연·해변 휴식가": {
+            region: "강원",
+            attraction: "강릉 경포해변"
+        },
+        "자연·로컬 탐험가": {
+            region: "순천",
+            attraction: "순천만국가정원"
+        },
+        "인프라·계획형 미식가": {
+            region: "전주",
+            attraction: "전주 한옥마을"
+        },
+        "인프라·즉흥형 탐험가": {
+            region: "충청",
+            attraction: "대전 성심당 문화원"
+        },
+        "인프라·명소형 문화가": {
+            region: "여수",
+            attraction: "돌산공원 & 돌산대교"
+        },
+        "인프라·외향형 핫플가": {
+            region: "부산",
+            attraction: "영도 흰여울문화마을"
+        },
+        "인프라·내향형 휴식가": {
+            region: "서울",
+            attraction: "성수동 연무장길"
+        },
+        "인프라·도심 미식가": {
+            region: "서울",
+            attraction: "DDP (동대문디자인플라자)"
+        },
+        "인프라·스트리트 탐험가": {
+            region: "인천",
+            attraction: "송도 트리플스트리트"
+        },
+        "인프라·녹지 휴식가": {
+            region: "서울",
+            attraction: "서울숲 곤충식물원"
+        },
+        "체계적 자연 치유가": {
+            region: "강원",
+            attraction: "설악산 권금성 케이블카"
+        },
+        "체계적 역사 탐방가": {
+            region: "경주",
+            attraction: "동궁과 월지"
+        },
+        "체계적 도심 관람가": {
+            region: "경기",
+            attraction: "과천 국립현대미술관"
+        },
+        "자유로운 미식 탐방가": {
+            region: "부산",
+            attraction: "해운대 블루라인파크"
+        },
+        "자유로운 해안 기행가": {
+            region: "제주",
+            attraction: "애월 해안도로"
+        },
+        "사교적 피크닉가": {
+            region: "경기",
+            attraction: "가평 자라섬 캠핑장"
+        },
+        "사교적 야경 미식가": {
+            region: "여수",
+            attraction: "낭만포차거리"
+        },
+        "사교적 도심 문화가": {
+            region: "서울",
+            attraction: "여의도 한강공원"
+        },
+        "차분한 산사 휴식가": {
+            region: "충청",
+            attraction: "공주 마곡사"
+        },
+        "차분한 정원 산책가": {
+            region: "순천",
+            attraction: "순천 문화의거리"
+        },
+        "차분한 고택 탐방가": {
+            region: "전주",
+            attraction: "경기전"
+        },
+        "전통 문화 미식가": {
+            region: "전주",
+            attraction: "전주 전통술박물관"
+        },
+        "전통 유적 탐험가": {
+            region: "경주",
+            attraction: "불국사"
+        },
+        "로컬 역사 미식가": {
+            region: "충청",
+            attraction: "부여 낙화암"
+        },
+        "액티브 자연 체험가": {
+            region: "강원",
+            attraction: "정선 병방치 짚와이어"
+        },
+        "감성 힐링 여행가": {
+            region: "제주",
+            attraction: "중문관광단지"
+        }
+    };
+
+    const recommendation = recommendations[type.title];
+
+    if (!recommendation) {
+        console.error(
+            "여행 유형 추천을 찾을 수 없습니다:",
+            type.title
+        );
+
+        return { text: "추천 정보를 준비 중입니다.", query: "대한민국 여행" };
     }
 
+    return {
+        text: `${recommendation.region} | 대표 관광지: ${recommendation.attraction}`,
+        query: `${recommendation.region} ${recommendation.attraction}`
+    };
+}
+
     function displayTravelResult() {
-        byId("screen-question").classList.add("hidden");
-        // 유형별 고정 설명 표시
-        byId("result-type-description").textContent =
-        travelTypeDescriptions[type.code]
-        || "나만의 방식으로 여행을 즐기는 여행자";
-
-        // AI 팩폭 한마디는 기존처럼 랜덤 선택
-        byId("result-ai-comment").textContent =
-        `"${buildTravelComment(type)}"`;
-        byId("screen-result").classList.remove("hidden");
-
         const scores = calculateTravelScores();
         const type = determineTravelType(scores);
 
-        byId("result-title").textContent = type.title;
-        byId("result-ai-comment").textContent = `"${buildTravelComment(type)}"`;
-        byId("result-region").textContent = `추천 지역: ${buildRegionRecommendation(type)}`;
-
-        const checklist = byId("result-checklist");
-        checklist.innerHTML = "";
-        buildTravelChecklist(type).forEach(item => {
-            const li = document.createElement("li");
-            li.className = "flex items-center space-x-2";
-            const bullet = document.createElement("span");
-            bullet.className = "w-1.5 h-1.5 bg-orange-500 rounded-full shrink-0";
-            const text = document.createElement("span");
-            text.textContent = item;
-            li.append(bullet, text);
-            checklist.appendChild(li);
-        });
-
-        // 원본 HTML에 결과 코드 요소가 없을 수 있으므로, HTML 구조를 임의 변경하지 않습니다.
-        console.log("여행 스타일 유형:", type.code, "축별 점수:", scores);
-    }
-
-
-
-    function displayTravelResult() {
-        const scores = calculateTravelScores();
-        const type = determineTravelType(scores);
-
+        
         // 유형 제목 표시
         byId("result-title").textContent = type.title;
+
+        // 여행 스타일 알파벳 코드 표시
+        const typeCodeElement = byId("result-type-code");
+
+        if (typeCodeElement) {
+            typeCodeElement.textContent = type.code
+                .split("")
+                .join(" · ");
+        }
+
 
         // 유형별 고정 설명 표시
         const descriptionElement = byId("result-type-description");
@@ -560,28 +700,48 @@ function buildTravelComment(type) {
         byId("result-ai-comment").textContent =
             `"${buildTravelComment(type)}"`;
 
-        // 추천 지역 표시
+        // 추천 지역 표시 및 카카오맵 바로가기 버튼 동적 연동
+        const regionInfo = buildRegionRecommendation(type);
         byId("result-region").textContent =
-            `추천 지역: ${buildRegionRecommendation(type)}`;
+            `추천 지역: ${regionInfo.text}`;
 
+        const kakaoMapBtn = byId("kakao-map-btn");
+        if (kakaoMapBtn) {
+            kakaoMapBtn.href = `https://map.kakao.com/?q=${encodeURIComponent(regionInfo.query)}`;
+        }
+
+        
         // 맞춤 체크리스트 표시
         const checklist = byId("result-checklist");
         checklist.innerHTML = "";
 
-        buildTravelChecklist(type).forEach(item => {
+        buildTravelChecklist(type).forEach((item, index) => {
             const li = document.createElement("li");
-            li.className = "flex items-center space-x-2";
+            li.className = "checklist-item flex items-center space-x-2";
 
-            const bullet = document.createElement("span");
-            bullet.className =
-                "w-1.5 h-1.5 bg-orange-500 rounded-full shrink-0";
+            const label = document.createElement("label");
+            label.htmlFor = `checklist-item-${index}`;
+            label.className = "flex items-center space-x-2 cursor-pointer w-full";
+
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = `checklist-item-${index}`;
 
             const text = document.createElement("span");
             text.textContent = item;
 
-            li.append(bullet, text);
+            checkbox.addEventListener("change", () => {
+                li.classList.toggle("is-completed", checkbox.checked);
+                updateChecklistProgress();
+            });
+
+            label.append(checkbox, text);
+            li.appendChild(label);
             checklist.appendChild(li);
         });
+
+        updateChecklistProgress();
+
 
         // 모든 결과 정보를 준비한 다음 결과 화면 표시
         byId("screen-intro").classList.add("hidden");
@@ -591,6 +751,82 @@ function buildTravelComment(type) {
         // 개발자 도구에서 결과 코드와 점수 확인
         console.log("여행 스타일 유형:", type.code, "축별 점수:", scores);
     }
+
+
+    // 체크리스트 진행률 업데이트
+    function updateChecklistProgress() {
+        const checklist = byId("result-checklist");
+        const countElement = byId("checklist-count");
+        const progressBar = byId("checklist-progress-bar");
+        const progressText = byId("checklist-progress-text");
+
+        if (!checklist || !countElement || !progressBar || !progressText) {
+            return;
+        }
+
+        const checkboxes = checklist.querySelectorAll(
+            'input[type="checkbox"]'
+        );
+        const total = checkboxes.length;
+        const completed = checklist.querySelectorAll(
+            'input[type="checkbox"]:checked'
+        ).length;
+
+        const percentage = total === 0
+            ? 0
+            : Math.round((completed / total) * 100);
+
+        countElement.textContent = `${completed} / ${total}`;
+        progressBar.style.width = `${percentage}%`;
+
+        if (completed === total && total > 0) {
+            progressText.textContent = "🎉 여행 준비 완료! 즐거운 여행 되세요.";
+        } else if (completed === 0) {
+            progressText.textContent = "하나씩 체크하며 여행을 준비해 보세요.";
+        } else {
+            progressText.textContent =
+                `여행 준비 ${percentage}% 완료! 조금만 더 준비해 봐요.`;
+        }
+    }
+
+
+
+    // 체크리스트 초기화 버튼
+    byId("checklist-reset-btn").addEventListener("click", () => {
+        const checkboxes = byId("result-checklist").querySelectorAll(
+            'input[type="checkbox"]'
+        );
+
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.closest("li").classList.remove("is-completed");
+        });
+
+        updateChecklistProgress();
+    });
+
+    // 체크리스트 복사 버튼
+    byId("checklist-copy-btn").addEventListener("click", async () => {
+        const checkboxes = byId("result-checklist").querySelectorAll(
+            'input[type="checkbox"]'
+        );
+
+        const lines = Array.from(checkboxes).map(checkbox => {
+            const text = checkbox.closest("label").querySelector("span").textContent;
+            return `${checkbox.checked ? "[x]" : "[ ]"} ${text}`;
+        });
+
+        const copyText = lines.join("\n");
+
+        try {
+            await navigator.clipboard.writeText(copyText);
+            alert("체크리스트를 복사했어요!");
+        } catch (error) {
+            console.error("체크리스트 복사 실패:", error);
+            alert("복사에 실패했어요. 브라우저 권한을 확인해 주세요.");
+        }
+    });
+
 
 
 
@@ -628,3 +864,5 @@ function buildTravelComment(type) {
     window.restartTest = resetTravelTest;
     window.showRandomTravelResult = showRandomTravelResult;
 })();
+
+
