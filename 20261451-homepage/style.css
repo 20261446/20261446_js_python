@@ -1,0 +1,710 @@
+
+    
+       /* 기본 화면 */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            background-color: #F7F7F4; 
+            color: #1E293B;
+            font-size: 16px;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            word-break: keep-all;
+        }
+
+        /* 콘텐츠 화면 전환 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scale-up {
+            animation: scaleUp 0.3s ease-in-out forwards;
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0.97);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* 주요 테스트 카드 */
+        #screen-intro,
+        #screen-question,
+        #screen-result {
+            border-radius: 24px;
+            box-shadow: 0 12px 36px rgba(30, 41, 59, 0.07);
+        }
+
+                /* 메인 제목 */
+        #screen-intro h1 {
+            font-family: 'Gowun Dodum', sans-serif;
+            font-size: clamp(27px, 5vw, 33px);
+            line-height: 1.5;
+            letter-spacing: -0.04em;
+            font-weight: 700;
+            color: #45352D;
+        }
+
+        /* 질문 문구 */
+        #question-text {
+            font-size: clamp(18px, 3.5vw, 21px);
+            line-height: 1.7;
+            letter-spacing: -0.025em;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        
+        /* 여행 유형 결과 제목 */
+        #result-title {
+            font-size: clamp(26px, 5vw, 30px);
+            line-height: 1.45;
+            letter-spacing: -0.035em;
+            font-weight: 800;
+            color: #172033;
+            overflow-wrap: anywhere;
+            margin-bottom: 16px;
+        }
+
+        /* 여행 유형 설명 */
+        #result-type-description {
+            font-size: 16px;
+            line-height: 1.85;
+            letter-spacing: -0.015em;
+            color: #7C3D20;
+            background-color: #FFF8EF;
+            border-color: #F5D9BD;
+            padding: 16px 18px;
+        }
+
+        /* AI 팩폭 문구 */
+        #result-ai-comment {
+            font-size: 16px;
+            line-height: 1.9;
+            font-weight: 500;
+            color: #78350F;
+            letter-spacing: -0.01em;
+            overflow-wrap: anywhere;
+        }
+
+        /* 추천 지역 */
+        #result-region {
+            font-size: 18px;
+            line-height: 1.75;
+            font-weight: 700;
+            color: #1E293B;
+            overflow-wrap: anywhere;
+        }
+
+        /* 체크리스트 */
+        #result-checklist {
+            font-size: 15px;
+            line-height: 1.9;
+            color: #475569;
+        }
+
+        #result-checklist li {
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+
+        /* 버튼 공통 효과 */
+        button {
+            -webkit-tap-highlight-color: transparent;
+            transition:
+                background-color 0.2s ease,
+                border-color 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.2s ease;
+        }
+
+        
+       
+        
+        
+        #options-container button:focus:not(:focus-visible) {
+            outline: none;
+            box-shadow: none;
+        }
+
+        #options-container button {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+
+        
+        /* 화면이 좁은 모바일 */
+        @media (max-width: 480px) {
+            body {
+                font-size: 15px;
+            }
+
+            #screen-intro,
+            #screen-question,
+            #screen-result {
+                border-radius: 20px;
+            }
+
+            #result-title {
+                font-size: 26px;
+            }
+
+            #result-type-description {
+                font-size: 15px;
+                padding: 14px;
+            }
+
+            #result-ai-comment {
+                font-size: 15px;
+            }
+
+            #result-region {
+                font-size: 16px;
+            }
+
+            #result-checklist {
+                font-size: 14px;
+            }
+        }
+
+
+        /* 움직임 최소화 설정을 사용하는 경우 */
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in,
+            .scale-up {
+                animation: none;
+            }
+
+            button {
+                transition: none;
+            }
+        }
+    
+
+        
+/* ========================================
+   여행 스타일 맞춤 체크리스트
+======================================== */
+
+/* 체크리스트 카드 */
+.travel-checklist-card {
+    border: 1px solid #F1E4D8;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #FFFCF8, #FFF7ED);
+    box-shadow: 0 6px 18px rgba(120, 73, 35, 0.05);
+}
+
+/* 체크리스트 제목 */
+.travel-checklist-card h3 {
+    color: #45352D;
+    letter-spacing: -0.025em;
+    line-height: 1.6;
+}
+
+/* 체크리스트 항목 */
+#result-checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding: 12px;
+    border: 1px solid #F0E7DE;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        opacity 0.2s ease;
+}
+
+/* 체크박스 */
+#result-checklist input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    margin-top: 3px;
+    accent-color: #EA580C;
+    cursor: pointer;
+}
+
+/* 체크 가능한 항목의 글자 */
+#result-checklist label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    cursor: pointer;
+    line-height: 1.7;
+}
+
+/* 완료한 항목 */
+#result-checklist li.is-completed {
+    background-color: #FFF7ED;
+    border-color: #FDBA74;
+}
+
+#result-checklist li.is-completed label {
+    color: #9A6B4B;
+    text-decoration: line-through;
+    text-decoration-color: #C08457;
+}
+
+/* 진행률 바 */
+.checklist-progress-fill {
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* 체크리스트 버튼 */
+.checklist-action-btn {
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid #E7D5C4;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    color: #7C3D20;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.checklist-action-btn:hover {
+    background-color: #FFF0E0;
+    border-color: #FDBA74;
+}
+
+.checklist-action-btn:active {
+    transform: scale(0.98);
+}
+
+.checklist-action-btn:focus-visible {
+    outline: 3px solid #FDBA74;
+    outline-offset: 3px;
+}
+
+/* 모바일 화면 */
+@media (max-width: 480px) {
+    .travel-checklist-card {
+        padding: 16px;
+        border-radius: 16px;
+    }
+
+    #result-checklist li {
+        padding: 10px;
+        gap: 8px;
+    }
+
+    .checklist-action-btn {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+}
+
+/* 움직임 최소화 설정 */
+@media (prefers-reduced-motion: reduce) {
+    .checklist-progress-fill,
+    #result-checklist li,
+    .checklist-action-btn {
+        transition: none;
+    }
+}
+
+/* STREAMING_CHUNK:Importing travel-style Google Fonts... */
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Gowun+Dodum&family=Pretendard:wght@400;500;600;700;800&display=swap');
+
+/* STREAMING_CHUNK:Configuring global reset and body typography... */
+
+{
+box-sizing: border-box;
+}
+
+body {
+font-family: 'Gowun Batang', 'Pretendard', serif;
+background-color: #F0F9FF;
+color: #0F172A;
+font-size: 16px;
+line-height: 1.65;
+-webkit-font-smoothing: antialiased;
+word-break: keep-all;
+}
+
+/* STREAMING_CHUNK:Styling screen transition animations... */
+.fade-in {
+animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.scale-up {
+animation: scaleUp 0.3s ease-in-out forwards;
+}
+
+@keyframes scaleUp {
+from {
+transform: scale(0.97);
+opacity: 0;
+}
+to {
+transform: scale(1);
+opacity: 1;
+}
+}
+
+/* STREAMING_CHUNK:Styling main screen containers and cards... */
+#screen-intro,
+#screen-question,
+#screen-result {
+border-radius: 24px;
+box-shadow: 0 16px 40px rgba(14, 165, 233, 0.12);
+background-color: #FFFFFF;
+border: 1px solid #E0F2FE;
+}
+
+/* STREAMING_CHUNK:Styling titles and headers with travel font... */
+#screen-intro h1 {
+font-family: 'Gowun Batang', serif;
+font-size: clamp(28px, 5vw, 34px);
+line-height: 1.5;
+letter-spacing: -0.03em;
+font-weight: 700;
+color: #0369A1;
+}
+
+#question-text {
+font-family: 'Gowun Batang', serif;
+font-size: clamp(19px, 3.5vw, 22px);
+line-height: 1.7;
+letter-spacing: -0.02em;
+font-weight: 700;
+overflow-wrap: anywhere;
+color: #0C4A6E;
+}
+
+#result-title {
+font-family: 'Gowun Batang', serif;
+font-size: clamp(26px, 5vw, 31px);
+line-height: 1.45;
+letter-spacing: -0.03em;
+font-weight: 700;
+color: #0369A1;
+overflow-wrap: anywhere;
+margin-bottom: 16px;
+}
+
+#result-type-description {
+font-size: 16px;
+line-height: 1.85;
+letter-spacing: -0.015em;
+color: #0369A1;
+background-color: #E0F2FE;
+border: 1px solid #BAE6FD;
+padding: 18px;
+border-radius: 16px;
+}
+
+#result-ai-comment {
+font-size: 16px;
+line-height: 1.9;
+font-weight: 500;
+color: #0284C7;
+letter-spacing: -0.01em;
+overflow-wrap: anywhere;
+}
+
+#result-region {
+font-size: 18px;
+line-height: 1.75;
+font-weight: 700;
+color: #0F172A;
+overflow-wrap: anywhere;
+}
+
+#result-checklist {
+font-size: 15px;
+line-height: 1.9;
+color: #334155;
+}
+
+/* STREAMING_CHUNK:Configuring base button styles... */
+button {
+-webkit-tap-highlight-color: transparent;
+font-family: 'Gowun Dodum', 'Pretendard', sans-serif;
+transition:
+background 0.2s ease,
+border-color 0.2s ease,
+box-shadow 0.2s ease,
+transform 0.2s ease;
+}
+
+/* STREAMING_CHUNK:Styling primary start and result action buttons... */
+.btn-primary,
+#screen-intro button,
+#screen-result button:not(.checklist-action-btn) {
+background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+color: #FFFFFF !important;
+border: none;
+border-radius: 16px;
+padding: 16px 28px;
+font-size: 18px;
+font-weight: 700;
+letter-spacing: -0.01em;
+cursor: pointer;
+box-shadow: 0 8px 20px rgba(2, 132, 199, 0.35);
+}
+
+.btn-primary:hover,
+#screen-intro button:hover,
+#screen-result button:not(.checklist-action-btn):hover {
+background: linear-gradient(135deg, #0369A1 0%, #075985 100%);
+transform: translateY(-2px);
+box-shadow: 0 12px 24px rgba(3, 105, 161, 0.45);
+}
+
+.btn-primary:active,
+#screen-intro button:active,
+#screen-result button:not(.checklist-action-btn):active {
+transform: translateY(0);
+background: #0C4A6E;
+}
+
+/* STREAMING_CHUNK:Styling option selection buttons (매우 그렇다 등)... */
+#options-container button,
+.option-btn,
+.survey-option {
+-webkit-tap-highlight-color: transparent;
+background-color: #FFFFFF;
+border: 1.5px solid #BAE6FD;
+color: #0369A1;
+border-radius: 14px;
+padding: 16px 20px;
+font-size: 16px;
+font-weight: 600;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(14, 165, 233, 0.06);
+width: 100%;
+text-align: left;
+}
+
+#options-container button:hover,
+.option-btn:hover,
+.survey-option:hover {
+background-color: #F0F9FF;
+border-color: #0284C7;
+color: #075985;
+transform: translateY(-2px);
+box-shadow: 0 6px 16px rgba(14, 165, 233, 0.18);
+}
+
+#options-container button:active,
+.option-btn:active,
+.survey-option:active {
+transform: translateY(0);
+background-color: #E0F2FE;
+}
+
+#options-container button:focus:not(:focus-visible) {
+outline: none;
+box-shadow: none;
+}
+
+#options-container button:focus-visible {
+outline: 3px solid #0284C7;
+outline-offset: 2px;
+}
+
+/* STREAMING_CHUNK:Styling travel checklist section... */
+.travel-checklist-card {
+border: 1px solid #BAE6FD;
+border-radius: 20px;
+background: linear-gradient(145deg, #FFFFFF, #F0F9FF);
+box-shadow: 0 8px 24px rgba(14, 165, 233, 0.08);
+padding: 20px;
+}
+
+.travel-checklist-card h3 {
+font-family: 'Gowun Batang', serif;
+color: #0369A1;
+letter-spacing: -0.025em;
+line-height: 1.6;
+}
+
+#result-checklist li {
+display: flex;
+align-items: flex-start;
+gap: 12px;
+margin-bottom: 8px;
+padding: 12px 16px;
+border: 1px solid #E0F2FE;
+border-radius: 12px;
+background-color: #FFFFFF;
+transition: all 0.2s ease;
+}
+
+#result-checklist li:hover {
+border-color: #7DD3FC;
+background-color: #F0F9FF;
+}
+
+#result-checklist input[type="checkbox"] {
+width: 20px;
+height: 20px;
+flex-shrink: 0;
+margin-top: 2px;
+accent-color: #0284C7;
+cursor: pointer;
+}
+
+#result-checklist label {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+width: 100%;
+cursor: pointer;
+line-height: 1.7;
+font-weight: 500;
+}
+
+#result-checklist li.is-completed {
+background-color: #E0F2FE;
+border-color: #7DD3FC;
+}
+
+#result-checklist li.is-completed label {
+color: #64748B;
+text-decoration: line-through;
+text-decoration-color: #0284C7;
+}
+
+.checklist-progress-fill {
+width: 0%;
+height: 100%;
+transition: width 0.3s ease;
+background: linear-gradient(90deg, #38BDF8 0%, #0284C7 100%);
+border-radius: 9999px;
+}
+
+.checklist-action-btn {
+min-height: 44px;
+padding: 10px 14px;
+border: 1.5px solid #BAE6FD;
+border-radius: 12px;
+background-color: #E0F2FE;
+color: #0369A1;
+font-size: 13px;
+font-weight: 700;
+cursor: pointer;
+}
+
+.checklist-action-btn:hover {
+background-color: #0284C7;
+border-color: #0284C7;
+color: #FFFFFF;
+box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+.checklist-action-btn:active {
+transform: scale(0.98);
+background-color: #0369A1;
+}
+
+.checklist-action-btn:focus-visible {
+outline: 3px solid #0284C7;
+outline-offset: 3px;
+}
+
+/* STREAMING_CHUNK:Configuring mobile responsive styles... */
+@media (max-width: 480px) {
+body {
+font-size: 15px;
+}
+
+#screen-intro,
+#screen-question,
+#screen-result {
+    border-radius: 20px;
+}
+
+#result-title {
+    font-size: 25px;
+}
+
+#result-type-description {
+    font-size: 15px;
+    padding: 14px;
+}
+
+#result-ai-comment {
+    font-size: 15px;
+}
+
+#result-region {
+    font-size: 16px;
+}
+
+#result-checklist {
+    font-size: 14px;
+}
+
+.travel-checklist-card {
+    padding: 16px;
+    border-radius: 16px;
+}
+
+#result-checklist li {
+    padding: 10px;
+    gap: 8px;
+}
+
+.checklist-action-btn {
+    padding: 10px 8px;
+    font-size: 12px;
+}
+
+}
+
+/* STREAMING_CHUNK:Setting accessibility reduced motion queries... */
+@media (prefers-reduced-motion: reduce) {
+.fade-in,
+.scale-up {
+animation: none;
+}
+
+button,
+.checklist-progress-fill,
+#result-checklist li,
+.checklist-action-btn {
+    transition: none;
+}
+
+}

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../images/favicon-2.png">
+    <title>나의 여행 스타일 테스트</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+
+<body class="min-h-screen flex flex-col items-center justify-start pt-8 pb-8 px-4 sm:px-6 lg:px-8">
+
+
+    <div id="app" class="w-full max-w-xl mx-auto">
+        
+        <!-- ==================== SCREEN 1: INTRO ==================== -->
+        <div id="screen-intro" class="fade-in bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 flex flex-col items-center text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-400 to-amber-500"></div>
+            
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-2 mt-2">나의 여행 취향 찾기</h1>
+            <p class="text-sm text-slate-500 mb-8">나는 어떤 여행자일까?</p>
+            
+            
+            
+            <!-- 대표 여행 이미지 -->
+            <div class="w-full max-w-sm mb-8 overflow-hidden rounded-2xl">
+                
+                <img
+                    src="../images/travel-main.jpg"
+                    alt="나의 여행 스타일 테스트 대표 이미지"
+                    class="w-full h-48 sm:h-56 object-cover rounded-2xl"
+                >
+
+            </div>
+
+            
+            <!-- 테스트 시작 버튼 -->
+            <button onclick="startTest()" class="w-full py-4 bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold rounded-xl shadow-lg hover:from-orange-600 hover:to-amber-600 transition-all transform hover:-translate-y-0.5 active:translate-y-0 text-lg">
+                테스트 시작
+            </button>
+            
+<!-- 개발자용 랜덤 결과 바로가기 -->
+<button
+    type="button"
+    onclick="showRandomTravelResult()"
+    class="w-full mt-3 py-3 border-2 border-dashed border-orange-300 text-orange-600 font-bold rounded-xl hover:bg-orange-50 transition-all"
+>
+    🛠️ 개발자용: 랜덤 결과 보기
+</button>
+
+        </div>
+
+        <!-- ==================== SCREEN 2: QUESTIONS ==================== -->
+        <div id="screen-question" class="hidden fade-in bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 relative">
+            
+            <!-- 진행률 표시 바 및 헤더 -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span id="q-topic-title" class="text-xs font-bold text-orange-600 bg-orange-50 px-3 py-1 rounded-full uppercase tracking-wider">[주제 타이틀]</span>
+                    <span id="q-progress-text" class="text-xs font-medium text-slate-400">1 / 18</span>
+                </div>
+                <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-orange-500 h-full transition-all duration-300" style="width: 5.5%;"></div>
+                </div>
+            </div>
+            
+            <!-- 질문 문구 박스 -->
+            <div class="bg-slate-50 border border-slate-100 rounded-2xl p-6 sm:p-8 min-h-[140px] flex items-center justify-center text-center mb-8 shadow-sm">
+                <h2 id="question-text" class="text-lg sm:text-xl font-bold text-slate-800 leading-snug">
+                    "[여기에 1번 질문을 입력하세요]"
+                </h2>
+            </div>
+            
+            <!-- 5점 척도 선택지 버튼 영역 -->
+            <div id="options-container" class="grid grid-cols-5 gap-2 sm:gap-4 mb-8">
+                <!-- 동적 렌더링 -->
+            </div>
+            
+        </div>
+
+        <!-- ==================== SCREEN 3: RESULT ==================== -->
+        <div id="screen-result" class="hidden fade-in bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-100 relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-orange-500 to-amber-500"></div>
+            
+            <!-- 성격 유형 제목 영역 -->
+            <div class="text-center mb-6">
+                <span class="text-xs font-bold text-orange-600 bg-orange-50 px-3 py-1 rounded-full uppercase tracking-wider">나의 여행 스타일</span>
+                <h2 id="result-title" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">[성격 유형 네이밍 1]</h2>
+                
+                <!-- 여행 스타일 알파벳 코드 -->
+                <div
+                    id="result-type-code"
+                    class="inline-flex items-center justify-center mt-3 mb-1 px-5 py-2 rounded-full bg-orange-100 text-orange-700 text-lg font-extrabold tracking-widest"
+                >
+                    NEPFL
+                </div>
+
+                <p
+                id="result-type-description"
+                class="mt-3 mx-auto max-w-md rounded-xl border border-orange-100 bg-orange-50/70 px-4 py-3 text-sm sm:text-base leading-relaxed text-orange-900"
+            >
+                여행 유형 설명이 여기에 표시됩니다.
+            </p>
+    
+            </div>
+            
+            <!-- AI 팩폭 한마디 박스 -->
+            <div class="bg-amber-50 border border-amber-200/60 rounded-2xl p-4 sm:p-5 mb-6 text-center shadow-sm">
+                <div class="text-xs font-bold text-amber-800 mb-1">🤖 AI의 팩폭 한마디</div>
+                <p id="result-ai-comment" class="text-sm sm:text-base font-medium text-amber-900 italic">
+                    "[AI 팩폭 문구 1번을 입력하세요]"
+                </p>
+            </div>
+            
+            <!-- 맞춤 추천 여행지 카드 (카카오 지도 바로가기 버튼 추가) -->
+            <div class="bg-slate-50 border border-slate-200/60 rounded-2xl p-5 mb-6 flex items-center justify-between gap-4">
+                <div>
+                    <div class="text-xs font-bold text-orange-600 mb-1">📍 32가지 유형별 맞춤 지역 추천</div>
+                    <div id="result-region" class="text-lg font-bold text-slate-800">추천 지역: [추천 지역 1번 입력]</div>
+                </div>
+                <a id="kakao-map-btn" href="https://map.kakao.com" target="_blank" rel="noopener noreferrer" class="shrink-0 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white font-bold text-sm rounded-xl shadow transition-all flex items-center gap-1">
+                    카카오지도 🗺️
+                </a>
+            </div>
+            
+            
+            <!-- 스타일별 맞춤 체크리스트 -->
+            <div class="travel-checklist-card bg-slate-50 border border-slate-200/60 rounded-2xl p-5 mb-6">
+
+                <div class="flex items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800">
+                            ☑️ 나의 여행 준비 체크리스트
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">
+                            여행 스타일에 맞는 준비를 하나씩 완료해 보세요.
+                        </p>
+                    </div>
+                    <span id="checklist-count" class="text-sm font-bold text-orange-600 whitespace-nowrap">
+                        0 / 6
+                    </span>
+                </div>
+
+                <!-- 체크리스트 진행률 -->
+                <div class="mb-4">
+                    <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
+                        <div
+                            id="checklist-progress-bar"
+                            class="checklist-progress-fill h-full bg-orange-500 rounded-full"
+                            style="width: 0%;"
+                        ></div>
+                    </div>
+                    <p id="checklist-progress-text" class="text-xs text-slate-500 mt-2">
+                        아직 완료한 항목이 없어요.
+                    </p>
+                </div>
+
+                <!-- 체크리스트 항목 -->
+                <ul id="result-checklist" class="space-y-2 text-sm text-slate-600">
+                    <!-- JavaScript에서 체크박스 항목을 표시 -->
+                </ul>
+
+                <!-- 체크리스트 버튼 -->
+                <div class="grid grid-cols-2 gap-2 mt-5">
+                    <button
+                        id="checklist-reset-btn"
+                        type="button"
+                        class="checklist-action-btn"
+                    >
+                        ↻ 체크 초기화
+                    </button>
+
+                    <button
+                        id="checklist-copy-btn"
+                        type="button"
+                        class="checklist-action-btn"
+                    >
+                        📋 목록 복사
+                    </button>
+                </div>
+
+            </div>
+
+            
+            <!-- 다시하기 버튼 -->
+            <button onclick="restartTest()" class="w-full py-3.5 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all shadow-md">
+                테스트 다시하기
+            </button>
+        </div>
+
+    </div>
+
+       <script>
+        // 1. [질문 수정 영역]
+        const questionsData = [
+            { topic: "주제 1. 주제명 (1/3)", q: "[여기에 1번 질문을 입력하세요]" },
+            { topic: "주제 1. 주제명 (2/3)", q: "[여기에 2번 질문을 입력하세요]" },
+            { topic: "주제 1. 주제명 (3/3)", q: "[여기에 3번 질문을 입력하세요]" },
+            { topic: "주제 2. 주제명 (1/3)", q: "[여기에 4번 질문을 입력하세요]" },
+            { topic: "주제 2. 주제명 (2/3)", q: "[여기에 5번 질문을 입력하세요]" },
+            { topic: "주제 2. 주제명 (3/3)", q: "[여기에 6번 질문을 입력하세요]" },
+            { topic: "주제 3. 주제명 (1/3)", q: "[여기에 7번 질문을 입력하세요]" },
+            { topic: "주제 3. 주제명 (2/3)", q: "[여기에 8번 질문을 입력하세요]" },
+            { topic: "주제 3. 주제명 (3/3)", q: "[여기에 9번 질문을 입력하세요]" },
+            { topic: "주제 4. 주제명 (1/3)", q: "[여기에 10번 질문을 입력하세요]" },
+            { topic: "주제 4. 주제명 (2/3)", q: "[여기에 11번 질문을 입력하세요]" },
+            { topic: "주제 4. 주제명 (3/3)", q: "[여기에 12번 질문을 입력하세요]" },
+            { topic: "주제 5. 주제명 (1/3)", q: "[여기에 13번 질문을 입력하세요]" },
+            { topic: "주제 5. 주제명 (2/3)", q: "[여기에 14번 질문을 입력하세요]" },
+            { topic: "주제 5. 주제명 (3/3)", q: "[여기에 15번 질문을 입력하세요]" },
+            { topic: "주제 6. 주제명 (1/3)", q: "[여기에 16번 질문을 입력하세요]" },
+            { topic: "주제 6. 주제명 (2/3)", q: "[여기에 17번 질문을 입력하세요]" },
+            { topic: "주제 6. 주제명 (3/3)", q: "[여기에 18번 질문을 입력하세요]" }
+        ];
+
+        // 2. [성격 네이밍 및 체크리스트 수정 영역]
+        const resultsData = [
+            { 
+                title: "[성격 유형 네이밍 1]", 
+                checklist: ["[체크리스트 항목 1]", "[체크리스트 항목 2]", "[체크리스트 항목 3]"] 
+            },
+            { 
+                title: "[성격 유형 네이밍 2]", 
+                checklist: ["[체크리스트 항목 1]", "[체크리스트 항목 2]", "[체크리스트 항목 3]"] 
+            },
+            { 
+                title: "[성격 유형 네이밍 3]", 
+                checklist: ["[체크리스트 항목 1]", "[체크리스트 항목 2]", "[체크리스트 항목 3]"] 
+            },
+            { 
+                title: "[성격 유형 네이밍 4]", 
+                checklist: ["[체크리스트 항목 1]", "[체크리스트 항목 2]", "[체크리스트 항목 3]"] 
+            },
+            { 
+                title: "[성격 유형 네이밍 5]", 
+                checklist: ["[체크리스트 항목 1]", "[체크리스트 항목 2]", "[체크리스트 항목 3]"] 
+            }
+        ];
+
+        // 3. [AI 팩폭 한마디 108개 수정 영역]
+        const aiCommentsData = Array.from({ length: 108 }, (_, i) => `[AI 팩폭 문구 ${i + 1}번을 입력하세요]`);
+
+        // 4. [유형별 추천 지역 목록 수정 영역]
+        const regionsData = [
+            "[추천 지역 1번 입력]", 
+            "[추천 지역 2번 입력]", 
+            "[추천 지역 3번 입력]", 
+            "[추천 지역 4번 입력]", 
+            "[추천 지역 5번 입력]", 
+            "[추천 지역 6번 입력]", 
+            "[추천 지역 7번 입력]", 
+            "[추천 지역 8번 입력]", 
+            "[추천 지역 9번 입력]", 
+            "[추천 지역 10번 입력]", 
+            "[추천 지역 11번 입력]"
+        ];
+
+        const optionLabels = [
+            { score: 5, label: "매우 그렇다", sub: "(5점)" },
+            { score: 4, label: "그렇다", sub: "(4점)" },
+            { score: 3, label: "보통이다", sub: "(3점)" },
+            { score: 2, label: "그렇지않다", sub: "(2점)" },
+            { score: 1, label: "매우 아니다", sub: "(1점)" }
+        ];
+
+        let currentQuestionIndex = 0;
+        let totalScore = 0;
+        let selectedScore = null;
+        let isTransitioning = false;
+
+        const screenIntro = document.getElementById('screen-intro');
+        const screenQuestion = document.getElementById('screen-question');
+        const screenResult = document.getElementById('screen-result');
+        const qTopicTitle = document.getElementById('q-topic-title');
+        const qProgressText = document.getElementById('q-progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+
+        function startTest() {
+            currentQuestionIndex = 0;
+            totalScore = 0;
+            screenIntro.classList.add('hidden');
+            screenResult.classList.add('hidden');
+            screenQuestion.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            selectedScore = null;
+            isTransitioning = false;
+            
+            const q = questionsData[currentQuestionIndex];
+            qTopicTitle.textContent = q.topic;
+            questionText.textContent = `"${q.q}"`;
+            
+            const progressPercent = ((currentQuestionIndex + 1) / questionsData.length) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            qProgressText.textContent = `${currentQuestionIndex + 1} / ${questionsData.length}`;
+
+            renderOptions();
+        }
+
+        function renderOptions() {
+            optionsContainer.innerHTML = '';
+            
+            optionLabels.forEach((opt) => {
+                const isSelected = selectedScore === opt.score;
+                
+                const btn = document.createElement('button');
+                btn.className = 'flex flex-col items-center group focus:outline-none transition-all';
+                btn.onclick = () => answerQuestion(opt.score);
+
+                const circleClass = isSelected
+                    ? 'w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-orange-500 bg-orange-500 flex items-center justify-center shadow-lg text-white scale-110 transition-all duration-200'
+                    : 'w-12 h-12 sm:w-14 sm:h-14 rounded-full border-2 border-slate-300 bg-white group-hover:border-orange-400 group-hover:bg-orange-50 flex items-center justify-center transition-all shadow-sm';
+
+                const checkIcon = isSelected 
+                    ? `<svg class="w-6 h-6 flex items-center justify-center text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
+                    : '';
+
+                btn.innerHTML = `
+                    <div class="${circleClass}">
+                        ${checkIcon}
+                    </div>
+                    <span class="text-xs sm:text-sm ${isSelected ? 'font-bold text-orange-600' : 'font-semibold text-slate-700'} mt-2">${opt.label}</span>
+                    <span class="text-[10px] sm:text-xs text-slate-400 mt-0.5">${opt.sub}</span>
+                `;
+
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function answerQuestion(score) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            
+            selectedScore = score;
+            renderOptions();
+
+            setTimeout(() => {
+                totalScore += score;
+                currentQuestionIndex++;
+
+                if (currentQuestionIndex < questionsData.length) {
+                    screenQuestion.classList.remove('scale-up');
+                    void screenQuestion.offsetWidth;
+                    screenQuestion.classList.add('scale-up');
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            }, 250);
+        }
+
+        function showResult() {
+            screenQuestion.classList.add('hidden');
+            screenResult.classList.remove('hidden');
+
+            const resultIndex = totalScore % resultsData.length;
+            const currentResult = resultsData[resultIndex];
+            document.getElementById('result-title').textContent = currentResult.title;
+
+            const checklistContainer = document.getElementById('result-checklist');
+            checklistContainer.innerHTML = '';
+            currentResult.checklist.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'flex items-center space-x-2';
+                li.innerHTML = `
+                    <span class="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+                    <span>${item}</span>
+                `;
+                checklistContainer.appendChild(li);
+            });
+
+            const aiIndex = (totalScore * 7) % aiCommentsData.length;
+            document.getElementById('result-ai-comment').textContent = `"${aiCommentsData[aiIndex]}"`;
+
+            const regionIndex = totalScore % regionsData.length;
+            document.getElementById('result-region').textContent = `추천 지역: ${regionsData[regionIndex]}`;
+        }
+
+        function restartTest() {
+            screenResult.classList.add('hidden');
+            screenIntro.classList.remove('hidden');
+        }
+    </script>
+
+    <script src="../js/script.js"></script>
+
+</body>
+</html>
+
+
