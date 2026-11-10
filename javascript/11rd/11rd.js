@@ -30,7 +30,8 @@ function showList() {
 
 function removeList() {
     var id = this.getAttribute("id");
+    alert(itemList[id] + "삭제되었습니다.");
     itemList.splice(id, 1);
     showList();
-    alert("삭제되었습니다.");
+    
 }
